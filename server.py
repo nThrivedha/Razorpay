@@ -22,7 +22,7 @@ import sys
 from ml_models import SentinelUPIRiskEngine
 from razorpay_client import RazorpaySyntheticClient
 
-PORT = 8000
+PORT = int(os.environ.get("PORT", 8000))
 risk_engine = SentinelUPIRiskEngine()
 synthetic_client = RazorpaySyntheticClient()
 

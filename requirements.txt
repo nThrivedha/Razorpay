@@ -1,0 +1,2 @@
+# BeforePay — Behavioral Risk Detection for UPI Transfers
+# Core implementation uses Python 3 standard library

@@ -3,7 +3,7 @@
   Razorpay AI Buildathon 2026 - Track 02: AI Risk Manager
 */
 
-const API_BASE = "http://localhost:8000/api/v1";
+const API_BASE = window.location.origin ? `${window.location.origin}/api/v1` : "http://localhost:8000/api/v1";
 let currentScenario = 'DIGITAL_ARREST';
 let autoStreamInterval = null;
 let currentMuleGraph = null;
