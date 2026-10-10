@@ -1,7 +1,7 @@
-# SentinelUPI — 5-Minute Pitch Video Script
+# BeforePay — 5-Minute Pitch Video Script
 
 **Track**: Razorpay AI Buildathon 2026 — Track 02: AI Risk Manager  
-**Project**: SentinelUPI — Scam-Induced Transfer Detector
+**Project**: BeforePay — Behavioral Risk Detection for UPI Transfers
 
 ---
 
@@ -27,16 +27,16 @@
 >
 > When a victim transfers ₹85,000 under panic through a Razorpay-integrated app or payment link, platform trust is shattered — even if Razorpay wasn't legally at fault.
 >
-> Undetected panic fraud triggers chargebacks, payment disputes, and merchant churn. By integrating **SentinelUPI into Razorpay AI Risk Manager**, Razorpay gives merchants an intelligent guardrail that preserves user trust, slashes dispute handling costs, and can even freeze mule payouts in **Razorpay Route**."
+> Undetected panic fraud triggers chargebacks, payment disputes, and merchant churn. By integrating **BeforePay into Razorpay AI Risk Manager**, Razorpay gives merchants an intelligent guardrail that preserves user trust, slashes dispute handling costs, and can even freeze mule payouts in **Razorpay Route**."
 
 ---
 
 ## 💻 SCENE 3: Technical Architecture & Live Product Demo (1:45 – 3:30)
 
-**[Visual: Screen share of SentinelUPI Web Dashboard: Tab 1 (Waterfall), Tab 2 (Mule Graph), and Tab 3 (Dual-Phone Simulator)]**
+**[Visual: Screen share of BeforePay Web Dashboard: Tab 1 (Waterfall), Tab 2 (Mule Graph), and Tab 3 (Dual-Phone Simulator)]**
 
 **Speaker Script**:
-> "SentinelUPI evaluates transactions without inspecting private message content. We extract a 20-dimensional non-content behavioral telemetry matrix.
+> "BeforePay evaluates transactions without inspecting private message content. We extract a 20-dimensional non-content behavioral telemetry matrix.
 >
 > Our model stack combines two engines:
 > 1. **Isolation Forest** for tree isolation depth.
@@ -59,7 +59,7 @@
 **[Visual: Slides showing performance table and ROC-AUC curve]**
 
 **Speaker Script**:
-> "We evaluated SentinelUPI on a held-out test set of 2,100 synthetic transaction sequences:
+> "We evaluated BeforePay on a held-out test set of 2,100 synthetic transaction sequences:
 > - **Precision**: 84.4%
 > - **Recall**: 92.0%
 > - **False Positive Rate**: 0.85% (17 out of 2,000 normal transfers flagged)
@@ -68,7 +68,7 @@
 >
 > What does an **0.85% FPR** mean in practice? Out of 1,000 legitimate UPI transactions, ~8 users encounter step-up verification. If a user is paying a hospital bill late at night while on call with family, a false positive creates friction.
 >
-> To mitigate this, SentinelUPI uses graduated friction: Medium Risk triggers a zero-delay soft warning banner, while High Risk allows one-click nominee override."
+> To mitigate this, BeforePay uses graduated friction: Medium Risk triggers a zero-delay soft warning banner, while High Risk allows one-click nominee override."
 
 ---
 
@@ -83,6 +83,6 @@
 >
 > Our model **missed these transactions (False Negative)** because individual transfer amounts had low $Z$-scores ($\approx 0.4\sigma$), bypassing single-transaction thresholds.
 >
-> **How we fixed it**: We upgraded our sequence feature pipeline to incorporate **rolling 6-hour temporal window aggregation**, accumulating multi-step velocity and total session transfer volume. On re-evaluation, SentinelUPI caught 100% of sharded micro-coercion sequences.
+> **How we fixed it**: We upgraded our sequence feature pipeline to incorporate **rolling 6-hour temporal window aggregation**, accumulating multi-step velocity and total session transfer volume. On re-evaluation, BeforePay caught 100% of sharded micro-coercion sequences.
 >
-> SentinelUPI protects user funds *before* they leave. Thank you!"
+> BeforePay protects user funds *before* they leave. Thank you!"

@@ -1,5 +1,5 @@
 """
-SentinelUPI — LSTM Autoencoder Sequence Behavioral Model
+BeforePay — LSTM Autoencoder Sequence Behavioral Model
 ---------------------------------------------------------
 Models user transaction sequences (T=5 steps x D=20 features).
 Calculates sequence reconstruction error (MSE) to detect behavioral drift:

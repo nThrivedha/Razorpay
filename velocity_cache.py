@@ -1,5 +1,5 @@
 """
-SentinelUPI — Cumulative Loss Velocity Cache
+BeforePay — Cumulative Loss Velocity Cache
 ---------------------------------------------
 Razorpay AI Risk Manager — Track 02: AI Risk Manager
 

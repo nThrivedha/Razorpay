@@ -1,5 +1,5 @@
 """
-SentinelUPI — Feature Engineering Pipeline
+BeforePay — Feature Engineering Pipeline
 -------------------------------------------
 Extracts non-content behavioral telemetry features from transaction payloads:
 1. Transaction Velocity Features

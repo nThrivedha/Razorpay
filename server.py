@@ -1,5 +1,5 @@
 """
-SentinelUPI — Razorpay AI Risk Manager REST API & Web App Server
+BeforePay — Behavioral Risk Detection for UPI Transfers
 ------------------------------------------------------------------
 Python 3.13 Standard Library HTTP Server hosting:
 - Live Risk Evaluation REST API (`POST /api/v1/risk/evaluate`)
@@ -208,7 +208,7 @@ class SentinelHandler(http.server.SimpleHTTPRequestHandler):
 def run_server():
     server_address = ('', PORT)
     with socketserver.TCPServer(server_address, SentinelHandler) as httpd:
-        print(f"[+] SentinelUPI Server running at http://localhost:{PORT}")
+        print(f"[+] BeforePay Server running at http://localhost:{PORT}")
         print(f"[+] Active REST API Endpoints:")
         print(f"   - POST http://localhost:{PORT}/api/v1/risk/evaluate")
         print(f"   - GET  http://localhost:{PORT}/api/v1/scenarios")

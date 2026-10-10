@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SentinelUPI — AI Risk Manager for Scam-Induced Panic Transfers | Razorpay</title>
+  <title>BeforePay — Behavioral Risk Detection for UPI Transfers | Razorpay</title>
   <meta name="description" content="Razorpay AI Risk Manager guardrail detecting scam-induced panic transfers before money leaves, using behavioral telemetry anomaly detection and SHAP explainability.">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,10 +21,10 @@
         </div>
         <div class="brand-titles">
           <div style="display:flex; align-items:center; gap:0.5rem;">
-            <h1>SentinelUPI</h1>
+            <h1>BeforePay</h1>
             <span class="rzp-pill">Razorpay AI Risk Manager</span>
           </div>
-          <p>Pre-Transfer Anomaly Detection for Scam-Induced & Coerced UPI Transfers</p>
+          <p>Behavioral Risk Detection for UPI Transfers</p>
         </div>
       </div>
       <div class="badge-track">
@@ -179,7 +179,7 @@
           <!-- Right: Risk Score & SHAP Waterfall Visualization -->
           <div style="background: rgba(10, 18, 38, 0.7); border:1px solid var(--border-glass); border-radius:var(--radius-lg); padding:1.5rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h3 style="font-size:0.95rem; color:var(--text-muted);">SentinelUPI Risk Engine Verdict</h3>
+              <h3 style="font-size:0.95rem; color:var(--text-muted);">BeforePay Risk Engine Verdict</h3>
               <span id="eval-latency-badge" class="badge-tag">⚡ <span id="actual-latency-val">—</span> ms Latency</span>
             </div>
             
@@ -252,7 +252,7 @@
           <button class="btn-primary" onclick="freezeMuleSettlement()">🛑 Freeze Razorpay Route Settlements</button>
         </div>
         <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">
-          Traces rapid dissipation across multi-hop mule account rings in real-time. SentinelUPI intercepts funds at <strong>Hop 1 (T+0s)</strong>, preventing downstream layer splits and international USDT cashouts.
+          Traces rapid dissipation across multi-hop mule account rings in real-time. BeforePay intercepts funds at <strong>Hop 1 (T+0s)</strong>, preventing downstream layer splits and international USDT cashouts.
         </p>
 
         <div class="graph-viewport-container">
@@ -288,7 +288,7 @@
           <span style="font-size:0.8rem; color:var(--text-muted);">Real-Time Step-Up Interception Flow</span>
         </div>
         <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem; text-align:center;">
-          Demonstrates how SentinelUPI protects victims in real-time by linking the <strong>Payer Checkout Screen</strong> with an emergency <strong>Nominee Push Alert</strong>.
+          Demonstrates how BeforePay protects victims in real-time by linking the <strong>Payer Checkout Screen</strong> with an emergency <strong>Nominee Push Alert</strong>.
         </p>
 
         <div class="dual-phone-wrapper">
@@ -320,7 +320,7 @@
                 <div style="font-size:1.5rem; margin-bottom:0.25rem;">🛑</div>
                 <strong style="font-size:0.95rem; color:var(--risk-critical); display:block;">Panic Transfer Intercepted!</strong>
                 <p style="font-size:0.75rem; color:var(--text-main); margin:0.5rem 0;">
-                  SentinelUPI detected an active phone call concurrent with a first-time high-value transfer.
+                  BeforePay detected an active phone call concurrent with a first-time high-value transfer.
                 </p>
                 <div style="background:rgba(0,0,0,0.5); padding:0.5rem; border-radius:8px; font-size:0.7rem; text-align:left; margin-bottom:0.75rem;">
                   ⏳ Cooling-Off Lock Active: <span id="victim-countdown" style="color:#f59e0b; font-weight:700; font-family:JetBrains Mono, monospace;">15:00</span><br>
@@ -399,7 +399,7 @@
           </div>
         </div>
         <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">
-          Real-time transaction stream across Razorpay PG merchants evaluated inline (&lt; 0.4ms latency) by SentinelUPI.
+          Real-time transaction stream across Razorpay PG merchants evaluated inline (&lt; 0.4ms latency) by BeforePay.
         </p>
 
         <div style="overflow-x:auto;">
@@ -479,10 +479,10 @@
             <h3 style="font-size:0.95rem; margin-bottom:1rem; color:var(--text-muted);">3-Line Razorpay PG Drop-In SDK Wrapper</h3>
 
             <div class="code-box">
-<span class="code-comment"># 1. Initialize Razorpay Sentinel Guardrail</span>
-<span class="code-kw">from</span> razorpay_sentinel <span class="code-kw">import</span> RazorpayRiskGuardrail
+<span class="code-comment"># 1. Initialize Razorpay BeforePay Guardrail</span>
+<span class="code-kw">from</span> razorpay_beforepay <span class="code-kw">import</span> RazorpayRiskGuardrail
 
-guardrail = RazorpayRiskGuardrail(api_key=<span class="code-str">"rzp_live_sentinel"</span>)
+guardrail = RazorpayRiskGuardrail(api_key=<span class="code-str">"rzp_live_beforepay"</span>)
 
 <span class="code-comment"># 2. Inspect checkout telemetry inline (&lt;0.4ms)</span>
 decision = guardrail.inspect_payment(order_id=<span class="code-str">"order_92554"</span>, telemetry=session_telemetry)
@@ -538,7 +538,7 @@ decision = guardrail.inspect_payment(order_id=<span class="code-str">"order_9255
             <strong>What 0.85% FPR means in production:</strong> Out of 1,000 legitimate UPI payments, ~8 users encounter protective step-up verification.
           </p>
           <p style="font-size:0.82rem; color:var(--text-muted);">
-            If a user is paying a hospital emergency bill late at night while on a call with family, a false positive introduces friction. To address this, SentinelUPI implements <strong>Graduated Protective Friction</strong>: Soft alert banners for Medium Risk (0-second delay) and 15-minute Cooling-Off with trusted nominee approval for High Risk.
+            If a user is paying a hospital emergency bill late at night while on a call with family, a false positive introduces friction. To address this, BeforePay implements <strong>Graduated Protective Friction</strong>: Soft alert banners for Medium Risk (0-second delay) and 15-minute Cooling-Off with trusted nominee approval for High Risk.
           </p>
         </div>
 

@@ -1,4 +1,4 @@
-# SentinelUPI — Scam-Induced Transfer Detector
+# BeforePay — Behavioral Risk Detection for UPI Transfers
 
 > **Track**: Razorpay AI Buildathon 2026 — Track 02: AI Risk Manager  
 > **One-Line Pitch**: Detects the behavioral fingerprint of a scam-induced panic transfer (e.g., "digital arrest" and AI voice-cloning scams) before money leaves, using non-content behavioral anomaly detection, SHAP waterfall explainability, and multi-hop mule ring analysis.
@@ -25,7 +25,7 @@
 ## 2. Why Razorpay (Platform Trust & Merchant Retention)
 
 Scam-drained transfers routed through Razorpay-integrated apps and payment links severely damage user trust and merchant reputation, even when Razorpay is not at fault. 
-Furthermore, undetected panic fraud surges increase dispute management and chargeback overhead for merchants. Positioning **SentinelUPI** as a turn-key API guardrail inside **Razorpay AI Risk Manager** protects merchant checkout flows, freezes mule payouts in Razorpay Route, and significantly increases merchant retention.
+Furthermore, undetected panic fraud surges increase dispute management and chargeback overhead for merchants. Positioning **BeforePay** as a turn-key API guardrail inside **Razorpay AI Risk Manager** protects merchant checkout flows, freezes mule payouts in Razorpay Route, and significantly increases merchant retention.
 
 ---
 
@@ -58,7 +58,7 @@ Evaluated on a held-out test set of 2,100 synthetic transaction sequences (2,000
 
 - **Production Impact of 0.85% FPR**: Out of 1,000 legitimate UPI transactions, ~8 users encounter a protective step-up verification.
 - **User Disruption**: A false positive on a legitimate urgent payment (e.g., paying a hospital bill late at night while on a phone call with family) risks causing user friction.
-- **Mitigation via Graduated Friction**: SentinelUPI avoids rigid transaction blocking. Medium Risk (30-64) triggers a non-blocking soft warning banner (0-second delay). High Risk (65-84) initiates a 15-minute cooling-off lock with **one-click emergency nominee confirmation override**.
+- **Mitigation via Graduated Friction**: BeforePay avoids rigid transaction blocking. Medium Risk (30-64) triggers a non-blocking soft warning banner (0-second delay). High Risk (65-84) initiates a 15-minute cooling-off lock with **one-click emergency nominee confirmation override**.
 
 ---
 
@@ -86,4 +86,4 @@ Evaluated on a held-out test set of 2,100 synthetic transaction sequences (2,000
 # 1. Start backend server
 python server.py
 ```
-Open **`http://localhost:8000`** in your browser to experience the SentinelUPI Dashboard!
+Open **`http://localhost:8000`** in your browser to experience the BeforePay Dashboard!

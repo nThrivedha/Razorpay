@@ -1,5 +1,5 @@
 """
-SentinelUPI — Multi-Language User Alert Translations
+BeforePay — Multi-Language User Alert Translations
 -----------------------------------------------------
 Razorpay AI Risk Manager — Track 02: AI Risk Manager
 
@@ -98,7 +98,7 @@ def get_alert_for_action(action: str, locale: str = "en", **kwargs) -> str:
 
 
 if __name__ == "__main__":
-    print("=== SentinelUPI — Multi-Language Alert Samples ===\n")
+    print("=== BeforePay — Multi-Language Alert Samples ===\n")
     for locale, lang in [("en", "English"), ("hi", "Hindi"), ("ta", "Tamil"),
                           ("te", "Telugu"), ("bn", "Bengali")]:
         msg = get_alert("HARD_INTERCEPT", locale=locale)

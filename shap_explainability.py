@@ -1,5 +1,5 @@
 """
-SentinelUPI — SHAP Explainability Engine & Counterfactual Analyzer
+BeforePay — SHAP Explainability Engine & Counterfactual Analyzer
 --------------------------------------------------------------------
 Razorpay AI Risk Manager — Track 02: AI Risk Manager
 Computes:

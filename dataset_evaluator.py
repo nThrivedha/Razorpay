@@ -1,5 +1,5 @@
 """
-SentinelUPI — Held-Out Dataset Generator & Evaluation Pipeline
+BeforePay — Held-Out Dataset Generator & Evaluation Pipeline
 ----------------------------------------------------------------
 1. Generates 10,000 synthetic normal payment baseline sequences for training.
 2. Injects synthetic scam sequences (Digital Arrest, AI Voice Clone, Remote Access, Micro-Coercion).

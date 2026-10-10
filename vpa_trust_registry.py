@@ -1,5 +1,5 @@
 """
-SentinelUPI — VPA / Payee Trust Score Registry
+BeforePay — VPA / Payee Trust Score Registry
 -----------------------------------------------
 Razorpay AI Risk Manager — Track 02: AI Risk Manager
 
@@ -100,7 +100,7 @@ class VPATrustRegistry:
             self._lookup_cache[vpa_lower] = result
             return result
 
-    def flag_as_mule(self, vpa: str, reason: str = "Flagged by SentinelUPI") -> None:
+    def flag_as_mule(self, vpa: str, reason: str = "Flagged by BeforePay") -> None:
         """
         Adds a VPA to the persistent mule watchlist.
         Called automatically by ml_models.py on every HARD_INTERCEPT action.

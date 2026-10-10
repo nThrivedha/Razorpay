@@ -1,5 +1,5 @@
 """
-SentinelUPI — Isolation Forest Anomaly Estimator
+BeforePay — Isolation Forest Anomaly Estimator
 ------------------------------------------------
 Implementation of the Isolation Forest algorithm (Liu, Ting, Zhou)
 trained on normal payment telemetry baselines to generate first-pass anomaly scores.

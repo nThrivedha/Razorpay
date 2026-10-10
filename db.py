@@ -1,5 +1,5 @@
 """
-SentinelUPI — SQLite Transaction Persistence Layer
+BeforePay — SQLite Transaction Persistence Layer
 ---------------------------------------------------
 Razorpay AI Risk Manager — Track 02: AI Risk Manager
 

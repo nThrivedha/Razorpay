@@ -1,5 +1,5 @@
 """
-SentinelUPI — Evaluation & False-Positive Cost Analysis
+BeforePay — Evaluation & False-Positive Cost Analysis
 --------------------------------------------------------
 Executes model evaluation on held-out test set and prints detailed metrics:
 - Precision, Recall, F1-Score, ROC-AUC
@@ -19,7 +19,7 @@ def execute_evaluation():
     fp_cost = res["false_positive_cost_analysis"]
 
     print("==========================================================================")
-    print("           SENTINELUPI — HELD-OUT EVALUATION & COST REPORT                ")
+    print("           BEFOREPAY — HELD-OUT EVALUATION & COST REPORT                  ")
     print("==========================================================================")
     print(f" Timestamp:                      {res['timestamp']}")
     print(f" Total Evaluation Samples:       {res['heldout_dataset_summary']['total_samples']}")

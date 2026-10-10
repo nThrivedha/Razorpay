@@ -1,5 +1,5 @@
 """
-SentinelUPI — Razorpay Test-Mode API Synthetic Generator & Mule Network Graph
+BeforePay — Behavioral Risk Detection for UPI Transfers
 -------------------------------------------------------------------------------
 Razorpay AI Risk Manager — Track 02: AI Risk Manager
 Simulates:

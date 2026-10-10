@@ -1,7 +1,7 @@
-# SentinelUPI — Technical Architecture & System Data Flow
+# BeforePay — Technical Architecture & System Data Flow
 
 **Track**: Razorpay AI Buildathon 2026 — Track 02: AI Risk Manager  
-**Project**: SentinelUPI — Scam-Induced Transfer Behavioral Detector
+**Project**: BeforePay — Behavioral Risk Detection for UPI Transfers
 
 ---
 
@@ -111,4 +111,4 @@ graph TD
 
 ## 3. Defense-Only Framing
 
-SentinelUPI operates exclusively as an inline guardrail within Razorpay AI Risk Manager to detect, intercept, and mitigate panic coercion fraud. No evasion methodologies or exploitation techniques are demonstrated.
+BeforePay operates exclusively as an inline guardrail within Razorpay AI Risk Manager to detect, intercept, and mitigate panic coercion fraud. No evasion methodologies or exploitation techniques are demonstrated.

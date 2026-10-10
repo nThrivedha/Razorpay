@@ -1,5 +1,5 @@
 """
-SentinelUPI — Machine Learning Model Stack & SHAP Explainability Engine
+BeforePay — Behavioral Risk Detection for UPI Transfers
 -------------------------------------------------------------------------
 Razorpay AI Risk Manager — Track 02: AI Risk Manager
 Includes:

@@ -1,5 +1,5 @@
 /* 
-  SentinelUPI — Razorpay AI Risk Manager Web App Controller
+  BeforePay — Behavioral Risk Detection for UPI Transfers
   Razorpay AI Buildathon 2026 - Track 02: AI Risk Manager
 */
 
