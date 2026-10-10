@@ -1,22 +1,43 @@
-# Python artifacts
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+.pytest_cache/
+.mypy_cache/
+*.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
 
-# Environments
+# Virtual Environments
 .env
+.env.*
+!.env.example
 .venv/
 env/
 venv/
 ENV/
 
-# Databases
+# Databases & Local Storage
 *.db
 *.sqlite3
 
-# IDE & OS files
+# Logs & Temporary Files
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Pitch Scripts & Private Drafts
+*pitch*
+*script*.md
+
+# Operating System & IDE Files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+desktop.ini
