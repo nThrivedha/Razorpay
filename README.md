@@ -89,4 +89,4 @@ Evaluated on a held-out test set of 2,100 synthetic transaction sequences (2,000
 # 1. Start backend server
 python server.py
 ```
-Open **`http://localhost:8000`** in your browser to experience the BeforePay Dashboard!
+Open *https://razorpay-jsma.onrender.com/* in your browser to experience the BeforePay Dashboard!
