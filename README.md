@@ -1,7 +1,7 @@
 # BeforePay — Behavioral Risk Detection for UPI Transfers
 
-> **Track**: Razorpay AI Buildathon 2026 — Track 02: AI Risk Manager  
-> **One-Line Pitch**: Detects the behavioral fingerprint of a scam-induced panic transfer (e.g., "digital arrest" and AI voice-cloning scams) before money leaves, using non-content behavioral anomaly detection, SHAP waterfall explainability, and multi-hop mule ring analysis.
+> **Track**: Razorpay AI Buildathon 2026 — Track 02: AI Risk Manager
+>  Detects the behavioral fingerprint of a scam-induced panic transfer (e.g., "digital arrest" and AI voice-cloning scams) before money leaves, using non-content behavioral anomaly detection, SHAP waterfall explainability, and multi-hop mule ring analysis.
 
 ---
 
