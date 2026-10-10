@@ -7,7 +7,6 @@
 
 ## 📚 Document Quick Links
 - 🗺️ **[System Architecture & Data Flow Diagram](ARCHITECTURE.md)**
-- 🎬 **[5-Minute Pitch Video Script](PITCH_VIDEO_SCRIPT.md)**
 - 📊 **[Held-Out Benchmark Results](dataset_eval_results.json)**
 - ⚡ **[Feature Engineering Pipeline](feature_pipeline.py)**
 
