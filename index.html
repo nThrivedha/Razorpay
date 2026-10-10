@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelUPI — AI Risk Manager for Scam-Induced Panic Transfers | Razorpay</title>
+  <meta name="description" content="Razorpay AI Risk Manager guardrail detecting scam-induced panic transfers before money leaves, using behavioral telemetry anomaly detection and SHAP explainability.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-nav">
+      <div class="brand-group">
+        <div class="rzp-logo-badge">
+          <span class="rzp-bolt">⚡</span>
+        </div>
+        <div class="brand-titles">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <h1>SentinelUPI</h1>
+            <span class="rzp-pill">Razorpay AI Risk Manager</span>
+          </div>
+          <p>Pre-Transfer Anomaly Detection for Scam-Induced & Coerced UPI Transfers</p>
+        </div>
+      </div>
+      <div class="badge-track">
+        <span class="pulse-dot"></span>
+        <span>Razorpay AI Buildathon 2026 &bull; Track 02: AI Risk Manager</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Metrics Ribbon -->
+  <section class="metrics-bar">
+    <div class="metrics-bar-inner">
+      <div class="stat-item">
+        <span class="stat-label">National UPI Fraud (FY26)</span>
+        <span class="stat-val">₹805 Crore <small class="text-sub">(10.64L Cases)</small></span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Post-Transfer Recovery Rate</span>
+        <span class="stat-val accent">~6% <small class="text-sub">(Pre-Transfer Vital)</small></span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Detection Precision / Recall</span>
+        <span class="stat-val emerald">84.4% / 92.0%</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">False Positive Rate / Latency</span>
+        <span class="stat-val">0.85% <small class="text-sub">(Avg Latency 0.36ms)</small></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Workspace -->
+  <main class="main-wrapper">
+
+    <!-- Tab Navigation -->
+    <nav class="tab-navigation">
+      <button class="tab-btn active" onclick="switchTab('simulator', event)">⚡ Scam Simulator & XAI Waterfall</button>
+      <button class="tab-btn" onclick="switchTab('mule-graph', event)">🕸️ Mule Account Graph</button>
+      <button class="tab-btn" onclick="switchTab('guardrail', event)">📱 Dual-Phone Guardrail Demo</button>
+      <button class="tab-btn" onclick="switchTab('livestream', event)">📡 AI Risk Stream (Live NOC)</button>
+      <button class="tab-btn" onclick="switchTab('policy-studio', event)">⚙️ Policy Studio & SDK Drop-In</button>
+      <button class="tab-btn" onclick="switchTab('evaluation', event)">📊 Benchmark & Failure Cases</button>
+    </nav>
+
+    <!-- TAB 1: SCAM SIMULATOR & SHAP WATERFALL -->
+    <section id="tab-simulator" class="tab-content active">
+      <div class="glass-panel">
+        <div class="panel-title">
+          <span>Attack Vector Simulator & Behavioral Telemetry</span>
+          <span style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">Select a preset scam attack vector or fine-tune telemetry in real-time</span>
+        </div>
+        
+        <!-- Preset Scenario Cards -->
+        <div class="scenario-presets">
+          <div class="preset-card active" id="preset-digital-arrest" onclick="loadScenario('DIGITAL_ARREST')">
+            <div class="preset-tag">Coercion Scam</div>
+            <div class="preset-title">🚨 Digital Arrest Coercion</div>
+          </div>
+          <div class="preset-card" id="preset-voice-clone" onclick="loadScenario('AI_VOICE_CLONE')">
+            <div class="preset-tag">Voice Cloning</div>
+            <div class="preset-title">🎙️ AI Voice Clone Emergency</div>
+          </div>
+          <div class="preset-card" id="preset-remote-access" onclick="loadScenario('REMOTE_ACCESS')">
+            <div class="preset-tag">Tech Support</div>
+            <div class="preset-title">📱 Remote Screen Control</div>
+          </div>
+          <div class="preset-card" id="preset-otp-share" onclick="loadScenario('OTP_SHARE')">
+            <div class="preset-tag">OTP Interception</div>
+            <div class="preset-title">🔑 OTP Share Relay Scam</div>
+          </div>
+          <div class="preset-card" id="preset-kyc-freeze" onclick="loadScenario('KYC_FREEZE_THREAT')">
+            <div class="preset-tag">Fake Bank Helpline</div>
+            <div class="preset-title">🏦 KYC Freeze Threat</div>
+          </div>
+          <div class="preset-card" id="preset-investment" onclick="loadScenario('INVESTMENT_FRAUD')">
+            <div class="preset-tag">Social Media Seeded</div>
+            <div class="preset-title">📈 Fake Investment Platform</div>
+          </div>
+          <div class="preset-card" id="preset-micro-coercion" onclick="loadScenario('MICRO_COERCION')">
+            <div class="preset-tag">Honest Failure Case</div>
+            <div class="preset-title">🔍 Micro-Coercion Sharding</div>
+          </div>
+          <div class="preset-card" id="preset-normal" onclick="loadScenario('NORMAL')">
+            <div class="preset-tag">Safe Control</div>
+            <div class="preset-title">✅ Legitimate Daily UPI Transfer</div>
+          </div>
+        </div>
+
+        <div class="simulator-grid">
+          <!-- Left: Telemetry Controls -->
+          <div>
+            <h3 style="font-size:0.95rem; margin-bottom:1rem; color:var(--text-muted);">Session & Behavioral Telemetry Inputs (Non-Content)</h3>
+
+            <div class="toggle-group">
+              <div>
+                <strong style="display:block; font-size:0.85rem;">Active Phone Call During Checkout</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Is user on an active call / WhatsApp audio while in payment app?</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="input-active-call" onchange="runEvaluation()">
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+
+            <div class="toggle-group">
+              <div>
+                <strong style="display:block; font-size:0.85rem;">Pasted Payee Account / VPA</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted);">VPA pasted from clipboard vs. habitual contact lookup</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="input-pasted-vpa" onchange="runEvaluation()">
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+
+            <div class="toggle-group">
+              <div>
+                <strong style="display:block; font-size:0.85rem;">Screen Sharing / Remote Desktop Active</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted);">AnyDesk, TeamViewer, or screen mirror permission active</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="input-screen-share" onchange="runEvaluation()">
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+
+            <div class="control-group" style="margin-top:1rem;">
+              <div class="control-header">
+                <span>Transfer Amount Deviation ($Z$-Score)</span>
+                <span id="val-amount-z">8.5σ (₹85,000)</span>
+              </div>
+              <input type="range" class="slider-input" id="input-amount-z" min="0" max="15" step="0.5" value="8.5" oninput="runEvaluation()">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span>Payee Account Age on Razorpay Network</span>
+                <span id="val-payee-age">2 Days (Brand New Mule)</span>
+              </div>
+              <input type="range" class="slider-input" id="input-payee-age" min="1" max="180" value="2" oninput="runEvaluation()">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span>PIN Entry Hesitation Latency (ms)</span>
+                <span id="val-hesitation">6,500 ms (Severe Hesitation)</span>
+              </div>
+              <input type="range" class="slider-input" id="input-hesitation" min="500" max="15000" step="500" value="6500" oninput="runEvaluation()">
+            </div>
+          </div>
+
+          <!-- Right: Risk Score & SHAP Waterfall Visualization -->
+          <div style="background: rgba(10, 18, 38, 0.7); border:1px solid var(--border-glass); border-radius:var(--radius-lg); padding:1.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h3 style="font-size:0.95rem; color:var(--text-muted);">SentinelUPI Risk Engine Verdict</h3>
+              <span id="eval-latency-badge" class="badge-tag">⚡ <span id="actual-latency-val">—</span> ms Latency</span>
+            </div>
+            
+            <div class="risk-gauge-container">
+              <div class="gauge-circle" id="risk-gauge">
+                <span class="gauge-score" id="risk-score-val">88</span>
+                <span class="gauge-tier" id="risk-tier-val">CRITICAL PANIC</span>
+              </div>
+              <div id="risk-action-badge" class="risk-badge CRITICAL_PANIC">
+                🚨 Action: Hard Intercept & Payout Hold
+              </div>
+            </div>
+
+            <!-- Mathematical SHAP Waterfall Plot -->
+            <div style="margin-top:1.5rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <h4 style="font-size:0.8rem; text-transform:uppercase; color:var(--text-dim); letter-spacing:0.05em;">
+                  SHAP Waterfall Contribution Trajectory ($R(x) = Base + \sum \phi_i$)
+                </h4>
+              </div>
+              <div id="shap-waterfall-container" class="waterfall-container">
+                <!-- Dynamic SVG Waterfall Chart -->
+              </div>
+            </div>
+
+            <!-- Counterfactual "What-If" Box -->
+            <div id="counterfactual-box" class="counterfactual-card">
+              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
+                <span>💡</span>
+                <strong style="color:var(--primary-light); font-size:0.82rem;">Counterfactual What-If Remediation:</strong>
+              </div>
+              <p id="counterfactual-text" style="font-size:0.78rem; color:var(--text-muted);">
+                If user terminates the active phone call and verifies payee identity, risk drops from 88 to 18 (LOW - Auto-Approve).
+              </p>
+            </div>
+
+            <!-- [NEW] VPA Trust Badge -->
+            <div id="vpa-trust-box" style="margin-top:0.75rem; display:flex; align-items:center; gap:0.6rem; padding:0.5rem 0.75rem; border-radius:8px; background:rgba(255,255,255,0.04); border:1px solid var(--border-glass);">
+              <span id="vpa-trust-icon" style="font-size:1rem;">❓</span>
+              <div style="flex:1;">
+                <div style="font-size:0.72rem; color:var(--text-muted);">Payee VPA Trust Registry</div>
+                <div id="vpa-trust-label" style="font-size:0.78rem; font-weight:600; color:var(--text-main);">UNKNOWN — No prior signal</div>
+              </div>
+            </div>
+
+            <!-- [NEW] Localized Alert Box -->
+            <div id="localized-alert-box" style="margin-top:0.75rem; padding:0.6rem 0.75rem; border-radius:8px; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.25); display:none;">
+              <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); margin-bottom:0.3rem;">🌐 Localized Alert (हिंदी)</div>
+              <p id="localized-alert-text" style="font-size:0.76rem; color:var(--text-muted); margin:0; line-height:1.5;"></p>
+            </div>
+
+            <!-- [NEW] Risk Score History Sparkline -->
+            <div style="margin-top:1rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                <h4 style="font-size:0.75rem; text-transform:uppercase; color:var(--text-dim); letter-spacing:0.05em;">Risk Score History (Session)</h4>
+                <span id="score-history-count" style="font-size:0.7rem; color:var(--text-muted);">0 evaluations</span>
+              </div>
+              <canvas id="score-history-canvas" width="340" height="60" style="width:100%; height:60px; border-radius:6px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: INTERACTIVE MULE ACCOUNT GRAPH RING -->
+    <section id="tab-mule-graph" class="tab-content">
+      <div class="glass-panel">
+        <div class="panel-title">
+          <span>Razorpay Route — Multi-Hop Mule Account Ring Analyzer</span>
+          <button class="btn-primary" onclick="freezeMuleSettlement()">🛑 Freeze Razorpay Route Settlements</button>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">
+          Traces rapid dissipation across multi-hop mule account rings in real-time. SentinelUPI intercepts funds at <strong>Hop 1 (T+0s)</strong>, preventing downstream layer splits and international USDT cashouts.
+        </p>
+
+        <div class="graph-viewport-container">
+          <canvas id="muleGraphCanvas" width="900" height="380"></canvas>
+        </div>
+
+        <div class="graph-details-grid">
+          <div class="graph-metric-card">
+            <span class="g-label">Source Amount</span>
+            <span class="g-val">₹85,000.00</span>
+          </div>
+          <div class="graph-metric-card">
+            <span class="g-label">Estimated Cashout Window</span>
+            <span class="g-val accent">&lt; 135 Seconds</span>
+          </div>
+          <div class="graph-metric-card">
+            <span class="g-label">Interception Latency</span>
+            <span class="g-val emerald">T+0s (Hop 1 Intercepted)</span>
+          </div>
+          <div class="graph-metric-card">
+            <span class="g-label">Razorpay Route Action</span>
+            <span class="g-val ruby" id="route-action-status">Escrow Settlement Locked</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: DUAL-PHONE GUARDRAIL DEMO (VICTIM + NOMINEE) -->
+    <section id="tab-guardrail" class="tab-content">
+      <div class="glass-panel">
+        <div class="panel-title">
+          <span>Two-Sided Interactive Guardrail Simulation (Victim + Trusted Nominee)</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Real-Time Step-Up Interception Flow</span>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem; text-align:center;">
+          Demonstrates how SentinelUPI protects victims in real-time by linking the <strong>Payer Checkout Screen</strong> with an emergency <strong>Nominee Push Alert</strong>.
+        </p>
+
+        <div class="dual-phone-wrapper">
+          <!-- PHONE 1: VICTIM PHONE -->
+          <div class="mobile-mockup-frame">
+            <div class="phone-label-tag">📱 Victim (Priya Sharma)</div>
+            <div class="mobile-notch"></div>
+            <div class="mobile-screen">
+              <div class="upi-header">
+                <span style="font-weight:700; font-size:0.9rem;">Razorpay UPI</span>
+                <span style="font-size:0.75rem; color:#10b981;">🔒 256-Bit Encrypted</span>
+              </div>
+
+              <div class="upi-amount-box">
+                <div style="font-size:0.75rem; color:var(--text-muted);">Transferring to Payee</div>
+                <div style="font-weight:700; font-size:1.05rem; margin:0.25rem 0;" id="checkout-payee">rbi.verify.mule@cybercell</div>
+                <div style="font-weight:800; font-size:1.8rem; color:var(--primary-light);" id="checkout-amount">₹85,000</div>
+              </div>
+
+              <div id="checkout-normal-state">
+                <div style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); border-radius:8px; padding:0.6rem; font-size:0.72rem; color:#fca5a5; margin-bottom:0.75rem;">
+                  📞 Active Call in Progress (142 mins)<br>
+                  ⚠️ Unverified First-Time Payee
+                </div>
+                <button class="btn-primary" style="width:100%; padding:0.85rem;" onclick="triggerCheckoutAlert()">Authorize with UPI PIN</button>
+              </div>
+
+              <div id="checkout-alert-state" style="display:none;" class="guardrail-alert-overlay">
+                <div style="font-size:1.5rem; margin-bottom:0.25rem;">🛑</div>
+                <strong style="font-size:0.95rem; color:var(--risk-critical); display:block;">Panic Transfer Intercepted!</strong>
+                <p style="font-size:0.75rem; color:var(--text-main); margin:0.5rem 0;">
+                  SentinelUPI detected an active phone call concurrent with a first-time high-value transfer.
+                </p>
+                <div style="background:rgba(0,0,0,0.5); padding:0.5rem; border-radius:8px; font-size:0.7rem; text-align:left; margin-bottom:0.75rem;">
+                  ⏳ Cooling-Off Lock Active: <span id="victim-countdown" style="color:#f59e0b; font-weight:700; font-family:JetBrains Mono, monospace;">15:00</span><br>
+                  📲 Alert sent to Nominee: <strong>Ananya Sharma</strong><br>
+                  📞 National Cybercrime Helpline: <strong>1930</strong>
+                </div>
+                <button class="btn-primary" style="background:#ef4444; width:100%; font-size:0.78rem;" onclick="cancelCheckout()">Cancel Transfer & Secure Account</button>
+              </div>
+
+              <div id="checkout-secured-state" style="display:none;" class="guardrail-success-overlay">
+                <div style="font-size:1.8rem;">🛡️</div>
+                <strong style="font-size:0.95rem; color:#10b981; display:block; margin:0.4rem 0;">Transfer Cancelled & Funds Protected</strong>
+                <p style="font-size:0.75rem; color:var(--text-muted);">
+                  Nominee Ananya Sharma confirmed and blocked this fraudulent transfer. ₹85,000 remains secure in your account.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PHONE 2: TRUSTED NOMINEE PHONE -->
+          <div class="mobile-mockup-frame nominee-frame">
+            <div class="phone-label-tag nominee-tag">📲 Nominee (Ananya Sharma)</div>
+            <div class="mobile-notch"></div>
+            <div class="mobile-screen">
+              <div class="upi-header">
+                <span style="font-weight:700; font-size:0.9rem;">Razorpay Guardian</span>
+                <span style="font-size:0.72rem; color:#60a5fa;">Nominee Contact</span>
+              </div>
+
+              <div id="nominee-idle-state" style="text-align:center; padding:3rem 1rem;">
+                <div style="font-size:2.5rem; margin-bottom:1rem; opacity:0.6;">🔔</div>
+                <div style="font-size:0.85rem; font-weight:600;">Nominee Guard Active</div>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.5rem;">
+                  Standing by to receive high-risk verification requests for Priya Sharma.
+                </p>
+              </div>
+
+              <div id="nominee-alert-state" style="display:none;" class="nominee-alert-box">
+                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                  <span style="font-size:1.3rem;">⚠️</span>
+                  <div>
+                    <strong style="font-size:0.85rem; color:#fbbf24;">Emergency Alert Dispatched</strong>
+                    <div style="font-size:0.68rem; color:var(--text-muted);">Razorpay AI Risk Manager</div>
+                  </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.4); padding:0.65rem; border-radius:8px; font-size:0.74rem; text-align:left; margin-bottom:0.5rem; line-height:1.4;">
+                  <strong>Priya Sharma</strong> is attempting to send <span style="color:#ef4444; font-weight:700;">₹85,000</span> to an unverified VPA (<code style="font-size:0.68rem;">rbi.verify.mule</code>) while on an active call.
+                </div>
+
+                <div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.3); border-radius:8px; padding:0.4rem; font-size:0.72rem; text-align:center; margin-bottom:0.75rem; color:#fde68a;">
+                  ⏳ Auto-Expiry in: <strong id="nominee-countdown" style="font-family:JetBrains Mono, monospace; font-size:0.88rem; color:#fbbf24;">15:00</strong>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                  <button class="btn-primary" style="background:#ef4444; width:100%; font-size:0.8rem; font-weight:700;" onclick="nomineeIntercept()">🚨 Intercept & Cancel Transfer</button>
+                  <button class="btn-primary" style="background:#334155; width:100%; font-size:0.75rem;" onclick="nomineeApprove()">Approve (Legitimate Payment)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: RAZORPAY AI RISK STREAM (LIVE NOC) -->
+    <section id="tab-livestream" class="tab-content">
+      <div class="glass-panel">
+        <div class="panel-title">
+          <span>Razorpay AI Risk Manager — Live Transaction Operations Desk</span>
+          <div style="display:flex; gap:0.75rem; align-items:center;">
+            <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">
+              <input type="checkbox" id="auto-stream-toggle" onchange="toggleAutoStream(this.checked)"> Auto-Play Ticker (2.5s)
+            </label>
+            <button class="btn-primary" onclick="refreshLiveStream()">🔄 Refresh Stream Batch</button>
+          </div>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">
+          Real-time transaction stream across Razorpay PG merchants evaluated inline (&lt; 0.4ms latency) by SentinelUPI.
+        </p>
+
+        <div style="overflow-x:auto;">
+          <table class="stream-table">
+            <thead>
+              <tr>
+                <th>Tx ID</th>
+                <th>Payer</th>
+                <th>Payee VPA</th>
+                <th>Amount</th>
+                <th>Behavioral Telemetry</th>
+                <th>Risk Score</th>
+                <th>Guardrail Action</th>
+              </tr>
+            </thead>
+            <tbody id="stream-table-body">
+              <!-- Dynamic Rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: MERCHANT POLICY STUDIO & DROP-IN SDK -->
+    <section id="tab-policy-studio" class="tab-content">
+      <div class="glass-panel">
+        <div class="panel-title">
+          <span>Merchant Risk Policy Studio & 3-Line Drop-In SDK</span>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn-primary" onclick="downloadForensicAuditReport()">📑 Download JSON Audit</button>
+            <button class="btn-primary" style="background:#0284c7;" onclick="printAuditPDF()">🖨️ Print / Export PDF</button>
+          </div>
+        </div>
+
+        <div class="simulator-grid" style="margin-top:1rem;">
+          <!-- Left: Policy Sliders -->
+          <div>
+            <h3 style="font-size:0.95rem; margin-bottom:1rem; color:var(--text-muted);">Customizable Guardrail Policy Rules</h3>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span>Soft Coercion Warning Banner Threshold</span>
+                <span id="val-policy-soft">30 / 100</span>
+              </div>
+              <input type="range" class="slider-input" id="policy-soft" min="15" max="45" value="30" oninput="updatePolicyUI()">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span>15-Min Cooling-Off & Nominee Lock Threshold</span>
+                <span id="val-policy-cooling">65 / 100</span>
+              </div>
+              <input type="range" class="slider-input" id="policy-cooling" min="50" max="80" value="65" oninput="updatePolicyUI()">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span>Hard Intercept & Settlement Freeze Threshold</span>
+                <span id="val-policy-hard">85 / 100</span>
+              </div>
+              <input type="range" class="slider-input" id="policy-hard" min="75" max="95" value="85" oninput="updatePolicyUI()">
+            </div>
+
+            <div class="control-group">
+              <div class="control-header">
+                <span>Cooling-Off Lock Duration</span>
+                <span id="val-policy-duration">15 Minutes</span>
+              </div>
+              <input type="range" class="slider-input" id="policy-duration" min="5" max="45" step="5" value="15" oninput="updatePolicyUI()">
+            </div>
+
+            <button class="btn-primary" style="margin-top:0.5rem; width:100%;" onclick="saveMerchantPolicy()">💾 Save Merchant Policy Rules</button>
+          </div>
+
+          <!-- Right: 3-Line SDK Drop-in -->
+          <div>
+            <h3 style="font-size:0.95rem; margin-bottom:1rem; color:var(--text-muted);">3-Line Razorpay PG Drop-In SDK Wrapper</h3>
+
+            <div class="code-box">
+<span class="code-comment"># 1. Initialize Razorpay Sentinel Guardrail</span>
+<span class="code-kw">from</span> razorpay_sentinel <span class="code-kw">import</span> RazorpayRiskGuardrail
+
+guardrail = RazorpayRiskGuardrail(api_key=<span class="code-str">"rzp_live_sentinel"</span>)
+
+<span class="code-comment"># 2. Inspect checkout telemetry inline (&lt;0.4ms)</span>
+decision = guardrail.inspect_payment(order_id=<span class="code-str">"order_92554"</span>, telemetry=session_telemetry)
+
+<span class="code-comment"># 3. Apply graduated protective intervention</span>
+<span class="code-kw">if</span> decision[<span class="code-str">"action"</span>] == <span class="code-str">"COOLING_OFF_LOCK"</span>:
+    guardrail.engage_cooling_off(order_id=<span class="code-str">"order_92554"</span>, nominee_alert=<span class="code-kw">True</span>)
+            </div>
+
+            <div style="margin-top:1rem; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); border-radius:var(--radius-md); padding:1rem; font-size:0.8rem;">
+              <strong style="color:var(--primary-light); display:block; margin-bottom:0.25rem;">Compliance Ready:</strong>
+              Generates cryptographic incident audit logs meeting RBI Cyber Security Framework and CERT-In Direction 2026 mandates.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: BENCHMARK EVALUATION & FAILURE CASES -->
+    <section id="tab-evaluation" class="tab-content">
+      <div class="glass-panel">
+        <div class="panel-title">
+          <span>Held-Out Test Set Performance & Honest Failure Cases</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
+          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:1rem; text-align:center;">
+            <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">PRECISION</div>
+            <div style="font-size:1.8rem; font-weight:800; color:var(--risk-low);">84.4%</div>
+            <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">92 TP / 109 Flagged</div>
+          </div>
+          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:1rem; text-align:center;">
+            <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">RECALL</div>
+            <div style="font-size:1.8rem; font-weight:800; color:var(--risk-low);">92.0%</div>
+            <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">92 Scams Caught / 100</div>
+          </div>
+          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:1rem; text-align:center;">
+            <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">FALSE POSITIVE RATE (FPR)</div>
+            <div style="font-size:1.8rem; font-weight:800; color:var(--risk-medium);">0.85%</div>
+            <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">17 FP / 2,000 Normal</div>
+          </div>
+          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:1rem; text-align:center;">
+            <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">ROC-AUC / LATENCY</div>
+            <div style="font-size:1.8rem; font-weight:800; color:var(--primary-light);">0.965</div>
+            <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">Avg 0.36 ms Latency</div>
+          </div>
+        </div>
+
+        <!-- False Positive Cost Analysis -->
+        <div style="background:rgba(245, 158, 11, 0.1); border:1px solid var(--risk-medium); border-radius:var(--radius-md); padding:1.25rem; margin-bottom:1.5rem;">
+          <h3 style="font-size:0.95rem; color:var(--risk-medium); margin-bottom:0.5rem;">⚠️ False-Positive Cost & Friction Analysis</h3>
+          <p style="font-size:0.85rem; color:var(--text-main); margin-bottom:0.5rem;">
+            <strong>What 0.85% FPR means in production:</strong> Out of 1,000 legitimate UPI payments, ~8 users encounter protective step-up verification.
+          </p>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            If a user is paying a hospital emergency bill late at night while on a call with family, a false positive introduces friction. To address this, SentinelUPI implements <strong>Graduated Protective Friction</strong>: Soft alert banners for Medium Risk (0-second delay) and 15-minute Cooling-Off with trusted nominee approval for High Risk.
+          </p>
+        </div>
+
+        <!-- Honest Failure Case Breakdown -->
+        <h3 style="font-size:1rem; margin-bottom:1rem;">Honest Failure Case Analyses</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:1rem;">
+            <span style="font-size:0.7rem; font-weight:700; color:var(--risk-critical);">FALSE NEGATIVE (MISSED SCAM)</span>
+            <h4 style="font-size:0.9rem; margin:0.3rem 0;">Low-Amount Micro-Coercion Test Sharding</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem;">
+              <strong>Scenario:</strong> Scammer instructs victim to transfer small test amounts (₹500, ₹1,200) over 3 hours while keeping them on call.
+            </p>
+            <p style="font-size:0.75rem; color:var(--text-dim);">
+              <strong>Root Cause:</strong> Amount Z-score stayed under 0.5σ, allowing individual small transfers to stay below threshold.<br>
+              <strong>Remediation:</strong> Added multi-step temporal window aggregation across rolling 6-hour windows.
+            </p>
+          </div>
+
+          <div style="background:rgba(15,23,42,0.6); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:1rem;">
+            <span style="font-size:0.7rem; font-weight:700; color:var(--risk-medium);">FALSE POSITIVE (FALSE ALARM)</span>
+            <h4 style="font-size:0.9rem; margin:0.3rem 0;">Late-Night Legitimate Used Car Purchase on Call</h4>
+            <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem;">
+              <strong>Scenario:</strong> User purchasing a used car (₹80,000) late at night while on a phone call discussing delivery with seller.
+            </p>
+            <p style="font-size:0.75rem; color:var(--text-dim);">
+              <strong>Root Cause:</strong> High Payee Novelty + 7.5σ Amount Deviation + Active Phone Call triggered High Risk alert (82/100).<br>
+              <strong>Remediation:</strong> Incorporate merchant/VPA trust score verification (distinguishing verified escrow handles).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

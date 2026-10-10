@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-09-03T10:13:22Z",
+  "heldout_dataset_summary": {
+    "total_samples": 2100,
+    "normal_samples": 2000,
+    "injected_scam_samples": 100,
+    "injected_scam_breakdown": {
+      "digital_arrest_coercion": 30,
+      "ai_voice_clone_emergency": 30,
+      "remote_access_screen_control": 20,
+      "micro_coercion_test_sharding": 20
+    }
+  },
+  "confusion_matrix": {
+    "true_positives": 92,
+    "false_positives": 17,
+    "true_negatives": 1983,
+    "false_negatives": 8
+  },
+  "metrics": {
+    "precision_percent": 84.4,
+    "recall_percent": 92.0,
+    "f1_score_percent": 88.0,
+    "false_positive_rate_percent": 0.85,
+    "roc_auc": 0.965,
+    "avg_inference_latency_ms": 0.43
+  },
+  "false_positive_cost_analysis": {
+    "fpr_stat": "0.85% (17 out of 2000 normal transactions flagged)",
+    "impact_summary": "Out of 1,000 legitimate UPI payments, ~8 users encounter protective step-up verification.",
+    "user_friction_mitigation": "Graduated Protective Friction prevents complete transaction blocking for false positives."
+  }
+}
